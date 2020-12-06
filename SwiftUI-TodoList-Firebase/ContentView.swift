@@ -9,8 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            VStack {
+                Spacer()
+                 
+                NavigationLink(
+                    destination: todoListIndex(),
+                    label: {
+                        Text("To do list")
+                    })
+                 
+                Spacer()
+            }
+            .padding(.top, 50)
+            .edgesIgnoringSafeArea(.all)
+        }
+        .animation(.easeInOut)
+        .navigationBarHidden(true)
     }
 }
 
