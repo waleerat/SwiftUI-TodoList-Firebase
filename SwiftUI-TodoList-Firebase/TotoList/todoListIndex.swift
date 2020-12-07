@@ -30,14 +30,14 @@ struct todoListIndex: View {
                     List {
                         Section {
                              
-                            ForEach(todoVM.todoItems) { todoItem in
-                                // List Body
-                                HStack {
-                                    CheckBox(todoItem: todoItem, isCheckBox: false)
-                                    Text(todoItem.item)
+                            ForEach(todoVM.todoListRows) { rowData in
+                                // List Body 
+                                LazyHStack {
+                                    CheckBox(rowData: rowData, isCheckBox: false)
+                                    Text(rowData.title)
                                     
                                     // get Popup detail
-                                    if (todoItem.note != "") {
+                                    if (rowData.note != "") {
                                         Button(action: {
                                             
                                         }, label: {
@@ -50,7 +50,7 @@ struct todoListIndex: View {
                                     // Edit Button
 //                                    Button(action: {
 //                                        self.isUpdateRecord.toggle()
-//                                        selectedRow = todoItem
+//                                        selectedRow = rowData
 //                                    }, label: {
 //                                        Image(systemName: "pencil.circle")
 //                                            .resizable()
@@ -60,7 +60,7 @@ struct todoListIndex: View {
                                 }
                                 .onLongPressGesture {
                                     self.isUpdateRecord.toggle()
-                                    selectedRow = todoItem
+                                    selectedRow = rowData
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 
@@ -81,9 +81,9 @@ struct todoListIndex: View {
                     // End Body
                     
                     
-                    /*ForEach(todoVM.todoItems) { todoItem in
+                    /*ForEach(todoVM.todoListRows) { rowData in
                         HStack {
-                            CheckBox(todoItem: todoItem, isCheckBox: false)
+                            CheckBox(rowData: rowData, isCheckBox: false)
                             
                             Spacer()
                             // Edit Button
@@ -133,11 +133,11 @@ struct todoListIndex: View {
     
     // MARK: - Helper Function
     func deleteItems(at offsets: IndexSet) {
-        let objectId = todoVM.todoItems[offsets.first!].id
+        let objectId = todoVM.todoListRows[offsets.first!].id
         todoVM.removeRecord(objectId: objectId) { (response, error) in
             //
         }
-        todoVM.todoItems.remove(at: offsets.first!)
+        todoVM.todoListRows.remove(at: offsets.first!)
 
     }
     

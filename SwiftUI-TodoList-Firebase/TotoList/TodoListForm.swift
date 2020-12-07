@@ -16,7 +16,7 @@ struct TodoListForm: View {
     @Binding var selectedRow: TodoModel?
     
     @State var objectId: String!
-    @State var item: String = ""
+    @State var title: String = ""
     @State var note: String = ""
     @State var imageURL: String = ""
     @State var isDone: Bool = false
@@ -62,7 +62,7 @@ struct TodoListForm: View {
                                         .font(.headline)
                                         .fontWeight(.light)
                                         .opacity(0.75)
-                                    TextField("Requied", text: $item)
+                                    TextField("Requied", text: $title)
                                         .padding(10)
                                         .background(Color.gray.opacity(0.3))
                                         .cornerRadius(7)
@@ -104,10 +104,10 @@ struct TodoListForm: View {
                                             .padding()
                                             .padding(.horizontal)
                                     })
-                                    .background(item == "" ? Color.blue.opacity(0.7) : Color.blue)
+                                    .background(title == "" ? Color.blue.opacity(0.7) : Color.blue)
                                     .clipShape(Capsule())
                                     .padding(.top, 45)
-                                    .disabled(item == "")
+                                    .disabled(title == "")
                                 }
                                 .padding(.bottom, 40)
                                 
@@ -124,7 +124,7 @@ struct TodoListForm: View {
                 if (isUpdateRecord) {
                     if let row = selectedRow {
                         objectId = row.id
-                        item = row.item
+                        title = row.title
                         note = row.note
                         imageURL = row.imageURL
                         isDone = row.isDone
@@ -150,8 +150,8 @@ struct TodoListForm: View {
     }
     
     func doCreateRecord(){
-        print(">> doCreateRecord()")
-        self.todoVM.createRecord(_item: item,
+      
+        self.todoVM.createRecord(_title: title,
                                _note: note,
                                _imageURL: "",
                                _isDone: isDone
@@ -163,7 +163,7 @@ struct TodoListForm: View {
     
     func doUpdateRecord(){
         self.todoVM.updateRecord(_objectId: objectId ?? UUID().uuidString,
-                               _item: item,
+                               _title: title,
                                _note: note,
                                _imageURL: "",
                                _isDone: isDone

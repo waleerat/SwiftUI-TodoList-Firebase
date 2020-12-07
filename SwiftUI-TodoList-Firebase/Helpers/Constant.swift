@@ -17,7 +17,7 @@ public let userDefaults = UserDefaults.standard
 
 //Common constant values
 public let kID = "id"
-
+public let kCREATEDDATE = "createdAt"
 
 //UserModel
 public let kUSERNAME = "name"
@@ -31,12 +31,17 @@ public let kPHONENUMBER = "phoneNumber"
 public let kONBOARD = "onBoard"
 
 // TodoListModel
-public let kTODOITEM = "item"
-public let kTOTOMEMO = "note"
-public let kTOTOIMAGEURL = "imageURL"
-public let kTOTOISDONE = "isDone"
-public let kCREATEDDATE = "createdAt"
+public let kTODOTITLE = "title"
+public let kTODOMEMO = "note"
+public let kTODOIMAGEURL = "imageURL"
+public let kTODOISDONE = "isDone"
 
+
+
+// TodoItemModel
+public let kTODOITEMITEM = "item"
+public let kTODOITEMIMAGEURL = "imageURL"
+public let kTODOITEMISDONE = "isDone"
 
 //Category
 public let kCATENAME = "name"

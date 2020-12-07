@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 class TodoVM: ObservableObject {
-    @Published var todoItems: [TodoModel] = []
+    @Published var todoListRows: [TodoModel] = []
     var todoModel = TodoModel()
     
 //    init() {
@@ -25,7 +25,7 @@ class TodoVM: ObservableObject {
             guard let snapshot = snapshot else { return }
             
             if !snapshot.isEmpty {
-                self.todoItems = self.getRowsFromDictionary(snapshot)
+                self.todoListRows = self.getRowsFromDictionary(snapshot)
             }
         }
         
@@ -37,10 +37,10 @@ class TodoVM: ObservableObject {
         for snapshot in snapshot.documents {
             let rowData = snapshot.data()
            allRows.append(TodoModel(id: rowData[kID] as! String,
-                                    item: rowData[kTODOITEM] as! String,
-                                    note: rowData[kTOTOMEMO] as! String,
-                                    imageURL: rowData[kTOTOIMAGEURL] as! String,
-                                    isDone: rowData[kTOTOISDONE] as! Bool,
+                                    title: rowData[kTODOTITLE] as! String,
+                                    note: rowData[kTODOMEMO] as! String,
+                                    imageURL: rowData[kTODOIMAGEURL] as! String,
+                                    isDone: rowData[kTODOISDONE] as! Bool,
                                     createdAt: Date()
                                     )
                             )
@@ -67,10 +67,10 @@ class TodoVM: ObservableObject {
         FirebaseReference(.TodoList).document(objectId).updateData(["isDone" : isDone])
     }
     
-    func createRecord(_item: String,_note: String, _imageURL: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
+    func createRecord(_title: String,_note: String, _imageURL: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
             
         let rowData = TodoModel(id: UUID().uuidString,
-                                 item: _item,
+                                 title: _title,
                                  note: _note,
                                  imageURL: _imageURL,
                                  isDone: _isDone,
@@ -86,10 +86,10 @@ class TodoVM: ObservableObject {
         }
     } 
     
-    func updateRecord(_objectId: String,_item: String,_note: String, _imageURL: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
+    func updateRecord(_objectId: String,_title: String,_note: String, _imageURL: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
          
         let rowData = TodoModel(id: _objectId,
-                                 item: _item,
+                                title: _title,
                                  note: _note,
                                  imageURL: _imageURL,
                                  isDone: _isDone,
@@ -117,13 +117,13 @@ class TodoVM: ObservableObject {
     }
  
     func emptyStrucValues(){
-        _ = TodoModel(id: "", item: "", note: "", imageURL: "", isDone: false, createdAt: Date())
+        _ = TodoModel(id: "", title: "", note: "", imageURL: "", isDone: false, createdAt: Date())
     }
     
 }
 
-//        todoItems.append(TodoModel(id: UUID().uuidString, name: "List 1", isDone: false))
-//        todoItems.append(TodoModel(id: UUID().uuidString, name: "List 2", isDone: true))
-//        todoItems.append(TodoModel(id: UUID().uuidString, name: "List 3", isDone: false))
-//        todoItems.append(TodoModel(id: UUID().uuidString, name: "List 4", isDone: false))
+//        todoListRows.append(TodoModel(id: UUID().uuidString, name: "List 1", isDone: false))
+//        todoListRows.append(TodoModel(id: UUID().uuidString, name: "List 2", isDone: true))
+//        todoListRows.append(TodoModel(id: UUID().uuidString, name: "List 3", isDone: false))
+//        todoListRows.append(TodoModel(id: UUID().uuidString, name: "List 4", isDone: false))
         

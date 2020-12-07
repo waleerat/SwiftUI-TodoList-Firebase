@@ -10,16 +10,17 @@ import SwiftUI
 struct CheckBox: View {
     @StateObject var todoVM = TodoVM()
     
-    @State var todoItem = TodoModel()
+    @State var rowData = TodoModel()
     @State var isCheckBox:Bool = false
     
     var body: some View {
         HStack {
             Button(action: {
+                
                 isCheckBox.toggle()
-                todoItem.isDone = isCheckBox
-                todoVM.updateCheckedTodoList(objectId: todoItem.id, isDone: isCheckBox)
-                //todoVM.updateCheckedTodoList(isDone: isCheckBox)
+                rowData.isDone = isCheckBox
+                todoVM.updateCheckedTodoList(objectId: rowData.id, isDone: isCheckBox)
+                
             }, label: {
                 Image(systemName: isCheckBox ?  "checkmark.square":"square")
                     .resizable()
@@ -28,7 +29,7 @@ struct CheckBox: View {
             .frame(width: 30, height: 30) 
         }
         .onAppear {
-            isCheckBox = todoItem.isDone
+            isCheckBox = rowData.isDone
         }
     }
     
