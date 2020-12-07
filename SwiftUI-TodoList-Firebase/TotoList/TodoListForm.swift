@@ -42,7 +42,7 @@ struct TodoListForm: View {
                                 .padding()
                                 
                                 VStack {
-                                    Text((selectedRow?.id == "") ? "Add Item" : "Update Item")
+                                    Text((selectedRow?.id == "") ? "Add Todo" : "Update Todo")
                                         .font(.title)
                                         .bold()
                                         .padding(.top, -50)
@@ -58,7 +58,7 @@ struct TodoListForm: View {
                                         .frame(width:120)
                                     }
                                     
-                                    Text("Todo item")
+                                    Text("Todo Title")
                                         .font(.headline)
                                         .fontWeight(.light)
                                         .opacity(0.75)
@@ -145,7 +145,7 @@ struct TodoListForm: View {
         } else {
             doUpdateRecord()
         }
-        todoVM.emptyStrucValues()
+        todoVM.resetStrucValues()
         self.isUpdateRecord = false
     }
     

@@ -29,13 +29,12 @@ struct todoListIndex: View {
                     // Start Body
                     List {
                         Section {
-                             
                             ForEach(todoVM.todoListRows) { rowData in
-                                // List Body 
+                                // List Body
                                 LazyHStack {
                                     CheckBox(rowData: rowData, isCheckBox: false)
+                                   
                                     Text(rowData.title)
-                                    
                                     // get Popup detail
                                     if (rowData.note != "") {
                                         Button(action: {
@@ -70,7 +69,7 @@ struct todoListIndex: View {
                             }//End of ForEach
                             
                             .onDelete { (indexSet) in
-                                self.deleteItems(at: indexSet)
+                                self.deleteRow(at: indexSet)
                             }
                         }
                         .frame(height: 60)
@@ -78,36 +77,7 @@ struct todoListIndex: View {
                     }
                     .navigationBarTitle("All Records")
                    // .listStyle(GroupedListStyle())
-                    // End Body
-                    
-                    
-                    /*ForEach(todoVM.todoListRows) { rowData in
-                        HStack {
-                            CheckBox(rowData: rowData, isCheckBox: false)
-                            
-                            Spacer()
-                            // Edit Button
-                            Button(action: {
-                                 
-                            }, label: {
-                                Image(systemName: "pencil.circle")
-                                    .resizable()
-                                    .frame(width: 35, height: 35, alignment: .center)
-                                    
-                            })
-                            // Delete Button
-                            Button(action: {
-                                 
-                            }, label: {
-                                Image(systemName: "trash.circle")
-                                    .resizable()
-                                    .frame(width: 35, height: 35, alignment: .center) 
-                            })
-                            
-                        }
-                        
-                        
-                    }*/
+                  
                 }
                 .onAppear {
                     todoVM.getDataFromFirebase()
@@ -132,7 +102,7 @@ struct todoListIndex: View {
     }
     
     // MARK: - Helper Function
-    func deleteItems(at offsets: IndexSet) {
+    func deleteRow(at offsets: IndexSet) {
         let objectId = todoVM.todoListRows[offsets.first!].id
         todoVM.removeRecord(objectId: objectId) { (response, error) in
             //
