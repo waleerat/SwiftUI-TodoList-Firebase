@@ -10,7 +10,7 @@ import Firebase
 
 class TodoVM: ObservableObject {
     @Published var todoItems: [TodoModel] = []
-    var todo = TodoModel()
+    var todoModel = TodoModel()
     
 //    init() {
 //        getDataFromFirebase()
@@ -25,7 +25,6 @@ class TodoVM: ObservableObject {
             guard let snapshot = snapshot else { return }
             
             if !snapshot.isEmpty {
-                print(">> Refresh todoItems")
                 self.todoItems = self.getRowsFromDictionary(snapshot)
             }
         }
@@ -50,7 +49,8 @@ class TodoVM: ObservableObject {
     }
     
     func saveRowDataToFirestore(rowData : TodoModel, completion: @escaping (_ error: Error?) -> Void) {
-        let withData =  todo.dictionaryFrom(rowData)
+        let withData =  todoModel.dictionaryFrom(rowData)
+          
         FirebaseReference(.TodoList).document(rowData.id).setData(withData) {
             error in
             DispatchQueue.main.async {
@@ -59,7 +59,7 @@ class TodoVM: ObservableObject {
                 }
                 return
             }
-           
+
         }
     }
     
@@ -76,7 +76,7 @@ class TodoVM: ObservableObject {
                                  isDone: _isDone,
                                  createdAt: Date()
                                 )
-           
+
         saveRowDataToFirestore(rowData: rowData) { (error) in
             if let error = error {
                 completion("Error creating document: \(error)",error)

@@ -40,4 +40,3 @@ struct TodoModel: Identifiable, Hashable {
     } 
 
 }
-
