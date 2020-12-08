@@ -13,20 +13,32 @@ struct TodoItems: View {
     
     @State var isUpdateRecord: Bool = false
     
-    @State var selectedObjectId: String = "9F159285-F92E-460A-8953-440AAEF799F0"
-    @State var title: String = ""
-    
+    @State var createdByUserName: String = ""
+    @State var progressStatus: String = "No"
     @State var newTodoItem: String = ""
     
+    let columns = [
+       // GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        
         return ZStack {
             Color.white
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 HeaderView(isTodoItemList: $isTodoItemList, isUpdateRecord: $isUpdateRecord, selectedRow: $selectedRow)
-                
-              //  Text("Here is \(title)")
+                VStack{
+                    HStack {
+                        Text("Todo : \(selectedRow?.title ?? "Unknown")")
+                        Spacer()
+                    }
+                    HStack(alignment: .center, spacing: 10) {
+                        Text("Create By  : \(createdByUserName)")
+                        Spacer()
+                        Text("Done ?  : \(progressStatus)")
+                    }
+                }.padding()
                 
                 VStack {
                     HStack {
@@ -54,8 +66,10 @@ struct TodoItems: View {
             
             .onAppear(){
                 if let row = selectedRow {
-                    title = row.title
+                    progressStatus = row.isDone ? "Yes" : "No"
+                    createdByUserName = "Lee"  //*Need to get username
                 }
+                
                 //selectedRow = TodoModel(id: "9F159285-F92E-460A-8953-440AAEF799F0", title: "Dummy TodoList", note: "Just test", imageURL: "", isDone: false, todoItems: [], createdByUser: "", createdAt: Date(), updateAt: Date())
             }
         }

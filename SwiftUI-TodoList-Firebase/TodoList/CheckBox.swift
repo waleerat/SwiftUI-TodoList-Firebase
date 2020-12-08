@@ -11,12 +11,14 @@ struct CheckBox: View {
     @StateObject var todoVM = TodoVM()
     
     @State var rowData = TodoModel()
-    @State var isCheckBox:Bool = false
+    @State var isCheckBox: Bool = false
+    @Binding var isUpdateCheckBox: Bool 
     
     var body: some View {
         HStack {
             Button(action: { 
                 isCheckBox.toggle()
+                isUpdateCheckBox.toggle()
                 rowData.isDone = isCheckBox
                 todoVM.updateCheckedTodoList(objectId: rowData.id, isDone: isCheckBox)
                 
@@ -37,6 +39,6 @@ struct CheckBox: View {
 
 struct CheckBox_Previews: PreviewProvider {
     static var previews: some View {
-        CheckBox()
+        CheckBox(isUpdateCheckBox: .constant(false))
     }
 }

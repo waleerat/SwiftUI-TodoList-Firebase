@@ -15,6 +15,8 @@ struct todoListIndex: View {
     @State var isTodoItemList: Bool = false
     @State var selectedRow: TodoModel?
     
+    @State var isUpdateCheckBox: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -27,13 +29,12 @@ struct todoListIndex: View {
                     }.padding()
                     // Start Body
                     List {
-                       
                         Section {
                             ForEach(todoVM.todoListRows) { rowData in
                                 // List Body
                                 HStack {
                                     
-                                    CheckBox(rowData: rowData, isCheckBox: false)
+                                    CheckBox(rowData: rowData, isCheckBox: false, isUpdateCheckBox: $isUpdateCheckBox)
                                    
                                     Text(rowData.title)
                                     Spacer()
@@ -69,6 +70,9 @@ struct todoListIndex: View {
                         .frame(height: 60)
                         
                     }
+                    .onChange(of: isUpdateCheckBox, perform: { value in
+                        todoVM.getDataFromFirebase()
+                    })
                     .navigationBarTitle("All Records")
                    // .listStyle(GroupedListStyle())
                   
@@ -108,6 +112,8 @@ struct todoListIndex: View {
         todoVM.todoListRows.remove(at: offsets.first!)
 
     }
+    
+     
     
 }
 

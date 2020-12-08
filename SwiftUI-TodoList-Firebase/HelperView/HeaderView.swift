@@ -19,9 +19,14 @@ struct HeaderView: View {
                 Text("My to do list").font(.title2)
                 Spacer()
                 if !isTodoItemList {
-                    IconView(imageName: "plus.circle.fill", backgroundColor: Color.green) {
+                    IconView(imageName: "plus.circle.fill", backgroundColor: Color.white) {
                         selectedRow = TodoModel()
                         isUpdateRecord.toggle()
+                    }
+                } else {
+                    IconView(imageName: "house.fill", backgroundColor: Color.white) {
+                        selectedRow = TodoModel()
+                        isTodoItemList.toggle()
                     }
                 }
             }
