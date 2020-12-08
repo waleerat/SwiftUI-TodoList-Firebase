@@ -76,34 +76,18 @@ struct TodoListForm: View {
                                 // End Form
                             Spacer()
                                 HStack(spacing: 5) {
-                                    Button(action: {
+                                    ButtonView(
+                                        text: "Cancel",backgroundColor: .gray, frameWidth: screen.width * 0.4) {
                                         isUpdateRecord = false
-                                    }, label: {
-                                        Text("Cancel")
-                                            .foregroundColor(.white)
-                                            .frame(width:100)
-                                            .padding()
-                                            .padding(.horizontal)
-                                    })
-                                    .background(Color.gray)
-                                    .clipShape(Capsule())
-                                    .padding(.top, 45)
-                                     
+                                    }
                                     
-                                    
-                                    Button(action: {
+                                    ButtonView(
+                                        text: (selectedRow == nil) ? "Save" : "Update",
+                                        backgroundColor: title == "" ? Color.blue.opacity(0.7) : Color.blue,
+                                        frameWidth: screen.width * 0.4) {
                                         saveDataToFirebase()
                                         self.loadParent()
-                                    }, label: {
-                                        Text((selectedRow == nil) ? "Save" : "Update")
-                                            .foregroundColor(.white)
-                                            .frame(width:100)
-                                            .padding()
-                                            .padding(.horizontal)
-                                    })
-                                    .background(title == "" ? Color.blue.opacity(0.7) : Color.blue)
-                                    .clipShape(Capsule())
-                                    .padding(.top, 45)
+                                    }
                                     .disabled(title == "")
                                 }
                                 .padding(.bottom, 40)

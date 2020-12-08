@@ -9,28 +9,29 @@ import SwiftUI
 
 struct ButtonView: View {
     var text: String
-    var imageName: String
-    var backgroundColor: Color = Color.white
-    
+    var imageName: String = ""
+    var backgroundColor: Color = .blue
+    var frameWidth: CGFloat = 100
     var action: () -> Void
     
     var body: some View {
         Button(action: action , label: {
             HStack {
                 Spacer()
-                Image(systemName: imageName)
-                    .font(.headline)
+                if (imageName != "") {
+                    Image(systemName: imageName)
+                        .font(.headline)
+                }
                 Text(text)
-                    .bold()
-                    .font(.system(size: 16))
                 Spacer()
-               
             }
-            .padding(.vertical, 6)
+            .padding()
             .foregroundColor(backgroundColor == .white ? .blue : .white)
             .background(backgroundColor)
-            .cornerRadius(3.0)
+            .clipShape(Capsule())
+            .frame(width:frameWidth)
         })
+        
     }
 }
 

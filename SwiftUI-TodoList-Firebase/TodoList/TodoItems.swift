@@ -38,15 +38,12 @@ struct TodoItems: View {
                          
                     }
                     
-                    Button(action: {
+                    ButtonView(text: "Close",
+                               frameWidth: screen.width * 0.5) {
                         selectedRow = nil
                         isTodoItemList = false
-                    }, label: {
-                        Text("Close")
-                            .frame(width:100)
-                            .padding()
-                            .padding(.horizontal)
-                    })
+                    }
+                     
                     
                 } .padding()
                 

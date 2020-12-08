@@ -15,8 +15,7 @@ struct CheckBox: View {
     
     var body: some View {
         HStack {
-            Button(action: {
-                
+            Button(action: { 
                 isCheckBox.toggle()
                 rowData.isDone = isCheckBox
                 todoVM.updateCheckedTodoList(objectId: rowData.id, isDone: isCheckBox)

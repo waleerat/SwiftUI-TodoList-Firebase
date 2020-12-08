@@ -106,27 +106,21 @@ struct SignupForm: View {
                 .animation(.easeOut(duration: 0.1))
      
                 //Sign in Button
-                Button(action: {
+                ButtonView(text: "Sign Up",
+                           backgroundColor: (email == ""
+                                                || (password == "" && repeatPassword == "")
+                                                || (password  != repeatPassword)) ? Color.gray : Color.blue,
+                           frameWidth: screen.width - 120) {
                     signUpUser()
-                }, label: {
-                    Text("Sign Up")
-                        .foregroundColor(.white)
-                        .frame(width: UIScreen.main.bounds.width - 120)
-                        .padding()
-                })
+                }
                 .disabled((email == "" || (password == "" && repeatPassword == "") || (password  != repeatPassword)))
-                .background((email == "" || (password == "" && repeatPassword == "") || (password  != repeatPassword)) ? Color.gray : Color.blue)
-                
-                .background(Color.blue)
-                .clipShape(Capsule())
-                .padding(.top, 45) 
+                 
                 
                 Spacer()
                 
                 HStack(spacing: 8) {
                     Text("Already have account?")
-                        .foregroundColor(Color.gray.opacity(0.8))
-                        
+                        .foregroundColor(Color.gray.opacity(0.8)) 
                     Button(action: {
                          self.IsPopSignupView.toggle()
                     }, label: {

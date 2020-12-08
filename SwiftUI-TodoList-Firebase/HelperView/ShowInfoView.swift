@@ -18,19 +18,13 @@ struct ShowInfoView: View {
                 Color.white.opacity(0.6)
                     VStack {
                         Text("\(infoDescription)")
-                            .font(.title)
-                        Button(action: {
-                           // signUpUser()
+                            .font(.title3)
+                        
+                        ButtonView(text: "Close",backgroundColor: .orange, frameWidth: screen.width - 120) {
+                            // signUpUser()
                             isShowInfo.toggle()
-                        }, label: {
-                            Text("Close")
-                                .foregroundColor(.white)
-                                .frame(width: UIScreen.main.bounds.width - 120)
-                                .padding()
-                        })
-                        .background(Color.orange)
-                        .clipShape(Capsule())
-                        .padding(.top, 45)
+                        }
+                         
                     }
                     .frame(width: screen.width * 0.9, height: screen.height * 0.3)
                         .background(Color.white)

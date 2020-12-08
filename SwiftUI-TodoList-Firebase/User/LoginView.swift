@@ -109,20 +109,13 @@ struct SigninForm: View {
             }//End of HStack
             
             //Sign in Button
-            Button(action: {
-               loginUser()
-            }, label: {
-                Text("Sign In")
-                    .foregroundColor(.white)
-                    .frame(width: UIScreen.main.bounds.width - 120)
-                    .padding()
-            })
+            ButtonView(text: "Sign In",
+                       backgroundColor: (email == "" || password == "") ? Color.gray : Color.blue,
+                       frameWidth: screen.width - 120) {
+                // signUpUser()
+                loginUser()
+            }
             .disabled(email == "" || password == "")
-            .background((email == "" || password == "") ? Color.gray : Color.blue)
-            .background(Color.blue)
-            .clipShape(Capsule())
-            .padding(.top, 45)
-            
             
             Spacer()
             
