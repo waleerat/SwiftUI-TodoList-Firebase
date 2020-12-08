@@ -151,7 +151,7 @@ struct SigninForm: View {
                 }else if isEmailVerified {
                     if !UserVM.currentUser()!.onBoarding {
                         self.isShowInfo = true
-                        self.infoDescription = "Go to update profile"
+                        self.infoDescription = "Go to update profile form"
                     } else {
                         self.isShowInfo = true
                         self.infoDescription = "Success! go to the next process"

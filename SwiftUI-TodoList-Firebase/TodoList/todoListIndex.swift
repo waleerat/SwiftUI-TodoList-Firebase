@@ -12,15 +12,14 @@ struct todoListIndex: View {
     
     @State private var newTodoItem = ""
     @State var isUpdateRecord: Bool = false
+    @State var isTodoItemList: Bool = false
     @State var selectedRow: TodoModel?
     
     var body: some View {
         ZStack {
-            
             VStack {
-                HeaderView(isUpdateRecord: $isUpdateRecord, selectedRow: $selectedRow)
+                HeaderView(isTodoItemList: $isTodoItemList, isUpdateRecord: $isUpdateRecord, selectedRow: $selectedRow)
                 // End of What's Next? Section
-                
                 VStack {
                     HStack {
                         Text("What's to do? ").font(.headline)
@@ -28,35 +27,30 @@ struct todoListIndex: View {
                     }.padding()
                     // Start Body
                     List {
+                       
                         Section {
                             ForEach(todoVM.todoListRows) { rowData in
                                 // List Body
-                                LazyHStack {
+                                HStack {
+                                    
                                     CheckBox(rowData: rowData, isCheckBox: false)
                                    
                                     Text(rowData.title)
+                                    Spacer()
                                     // get Popup detail
                                     if (rowData.note != "") {
-                                        Button(action: {
-                                            
-                                        }, label: {
-                                            Image(systemName: "info.circle")
-                                                .resizable()
-                                                .frame(width:25, height: 25)
-                                        })
+                                        IconView(imageName: "info.circle", backgroundColor: Color.blue, frameSize: 25) {
+                                             //*Need Preview Info
+                                        } 
                                     }
-                                    Spacer()
-                                    // Edit Button
-//                                    Button(action: {
-//                                        self.isUpdateRecord.toggle()
-//                                        selectedRow = rowData
-//                                    }, label: {
-//                                        Image(systemName: "pencil.circle")
-//                                            .resizable()
-//                                            .frame(width: 35, height: 35, alignment: .center)
-//
-//                                    })
+                                    
+                                    // Add todo list Button
+                                    IconView(imageName: "list.dash", backgroundColor: Color.blue, frameSize: 25) {
+                                        isTodoItemList = true
+                                        selectedRow = rowData
+                                    }
                                 }
+                                
                                 .onLongPressGesture {
                                     self.isUpdateRecord.toggle()
                                     selectedRow = rowData
@@ -82,7 +76,7 @@ struct todoListIndex: View {
                 .onAppear {
                     todoVM.getDataFromFirebase()
                 }
-                
+               
                 Spacer()
  
             }
@@ -93,6 +87,10 @@ struct todoListIndex: View {
                         todoVM.getDataFromFirebase()
                         
                     }
+                }
+                
+                if isTodoItemList {
+                    TodoItems(isTodoItemList: $isTodoItemList, selectedRow: $selectedRow)
                 }
             }
              
@@ -119,34 +117,9 @@ struct todoListIndex_Previews: PreviewProvider {
     }
 }
 
-struct HeaderView: View {
-    @Binding var isUpdateRecord: Bool
-    @Binding var selectedRow: TodoModel?
-    var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Text("My to do list").font(.title2)
-                Spacer()
-                Button(action: {
-                    selectedRow = TodoModel()
-                    isUpdateRecord.toggle()
-                }, label: {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 35, height: 35)
-                        .foregroundColor(.green)
-                        .imageScale(.large)
-                })
-            }
-        }
-        .padding()
-        .frame(height:80)
-        .padding(.top, 30)
-        .background(Color.blue)
-        .foregroundColor(.white)
-    }
-}
+
+
+
 
 
 // Delete Button

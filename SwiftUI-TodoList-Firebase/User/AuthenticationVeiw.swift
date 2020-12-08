@@ -8,24 +8,40 @@
 import SwiftUI
 
 struct AuthenticationVeiw: View {
-    let screen = UIScreen.main.bounds
+    @State var isLogin: Bool = false
     
     var body: some View {
             ZStack {
                 Color.init("myBackground")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    if UserVM.currentUser() != nil {
+                    if isLogin == true {
                         Text("Go to dashboard")
                             .foregroundColor(.primary)
                             .padding()
-                            
-                    } else {
-                        LoginView()
+                        
+                        IconView(imageName: "square.and.arrow.up", backgroundColor: Color.blue) {
+                            UserVM.logOutCurrentUser { (error) in
+                                isLogin = false
+                            }
+                        } 
                     }
                 }
                 .padding()
-            } // End of ZStack
+                
+                if !isLogin {
+                    LoginView()
+                }
+                
+            }
+            .onAppear() {
+                if UserVM.currentUser() != nil {
+                    print("Login")
+                    isLogin = true
+                } else {
+                    print(" Not Login")
+                }
+            }// End of ZStack
     }
 }
 

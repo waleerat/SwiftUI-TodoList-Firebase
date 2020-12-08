@@ -86,6 +86,7 @@ class UserVM: ObservableObject {
             userDefaults.removeObject(forKey: kCURRENTUSER)
             userDefaults.synchronize()
             completion(nil)
+            print("Log out")
         } catch let error as NSError {
             completion(error)
         }

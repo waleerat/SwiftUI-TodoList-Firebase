@@ -28,7 +28,6 @@ import Firebase
      * func updateRecord : update document
      * func removeRecord : remove document
      * func resetStrucValues : reset value in TodoListModel
-   
  
  */
 class TodoVM: ObservableObject {

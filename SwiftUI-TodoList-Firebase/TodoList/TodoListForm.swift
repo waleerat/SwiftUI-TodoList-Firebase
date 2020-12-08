@@ -30,17 +30,14 @@ struct TodoListForm: View {
                             VStack {
                                 HStack {
                                     Spacer()
-                                    Button(action: {
+                                    IconView(imageName: "xmark.circle", backgroundColor: Color.blue, frameSize: 25) {
                                         self.isUpdateRecord.toggle()
-                                    }, label: {
-                                        Image(systemName: "xmark.circle")
-                                            .font(.system(size: 30))
-                                    })
+                                    }
                                 }
                                 .padding(.horizontal, 10)
                                 .foregroundColor(.blue)
                                 .padding()
-                                
+                               
                                 VStack {
                                     Text((selectedRow?.id == "") ? "Add Todo" : "Update Todo")
                                         .font(.title)
@@ -140,7 +137,7 @@ struct TodoListForm: View {
     // MARK: - Helper Functions
     func saveDataToFirebase(){
         
-        if let _ = selectedRow {
+        if selectedRow?.id == "" {
             doCreateRecord()
         } else {
             doUpdateRecord()
