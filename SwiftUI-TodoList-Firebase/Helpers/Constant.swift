@@ -40,6 +40,7 @@ public let kTODOISDONE = "isDone"
 
 // TodoItemModel
 public let kTODOITEMITEM = "item"
+public let kTODOITEMNOTE = "note"
 public let kTODOITEMIMAGEURL = "imageURL"
 public let kTODOITEMISDONE = "isDone"
 public let kTODOLISTREFID = "todoListRefId"
@@ -49,5 +50,9 @@ public let kDONEAT = "dontAt"
  
 //Category
 public let kCATENAME = "name"
-
  
+enum CustomTab: String {
+    case showAll = "All"
+    case showPending = "Pendding"
+    case showDone = "Done"
+}

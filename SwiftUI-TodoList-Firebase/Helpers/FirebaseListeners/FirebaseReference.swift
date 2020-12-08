@@ -11,9 +11,8 @@ import FirebaseFirestore
 enum FCollectionReference: String {
     case User
     case TodoList
-    case PinUser
-    case PinList
-    case PinSecretCode
+    case TodoItemList
+    
 }
 
 

@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import Firebase
-
+import Firebase 
 
 /**
  Functions for TodoList View
@@ -32,6 +31,10 @@ import Firebase
  */
 class TodoVM: ObservableObject {
     @Published var todoListRows: [TodoModel] = []
+    @Published var pendingRows: [TodoModel] = []
+    @Published var doneRows: [TodoModel] = []
+    
+    
     var todoModel = TodoModel()
     /**
      Get data form friebase
@@ -55,7 +58,7 @@ class TodoVM: ObservableObject {
             guard let snapshot = snapshot else { return }
             
             if !snapshot.isEmpty {
-                self.todoListRows = self.getRowsFromDictionary(snapshot)
+                self.getRowsFromDictionary(snapshot)
             }
         }
         
@@ -71,21 +74,30 @@ class TodoVM: ObservableObject {
         return [TodoModel] to the main function "getDataFromFirebase"
      */
     
-    func getRowsFromDictionary(_ snapshot: QuerySnapshot) -> [TodoModel] {
-        
-        var allRows: [TodoModel] = []
+    func getRowsFromDictionary(_ snapshot: QuerySnapshot) {
+        todoListRows = []
+        pendingRows = []
+        doneRows = []
+        var rowDataStructure: TodoModel
         for snapshot in snapshot.documents {
             let rowData = snapshot.data()
-           allRows.append(TodoModel(id: rowData[kID] as! String,
+            rowDataStructure = TodoModel(id: rowData[kID] as! String,
                                     title: rowData[kTODOTITLE] as! String,
                                     note: rowData[kTODOMEMO] as! String,
                                     imageURL: rowData[kTODOIMAGEURL] as! String,
                                     isDone: rowData[kTODOISDONE] as! Bool,
                                     createdAt: Date()
                                     )
-                            )
+            self.todoListRows.append(rowDataStructure)
+            
+            if (rowData[kTODOISDONE] as! Bool) {
+                self.doneRows.append(rowDataStructure)
+            } else {
+                self.pendingRows.append(rowDataStructure)
+            }
+            
         }
-        return allRows
+        
     }
     /**
      Convert NSDictionary to Structure
@@ -138,12 +150,11 @@ class TodoVM: ObservableObject {
         Prepare TodoList Structure
      */
     
-    func createRecord(_title: String,_note: String, _imageURL: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
+    func createRecord(_title: String,_note: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
             
         let rowData = TodoModel(id: UUID().uuidString,
                                  title: _title,
                                  note: _note,
-                                 imageURL: _imageURL,
                                  isDone: _isDone,
                                  createdAt: Date()
                                 )
@@ -163,12 +174,11 @@ class TodoVM: ObservableObject {
      - Remark:
         Prepare TodoList Structure
      */
-    func updateRecord(_objectId: String,_title: String,_note: String, _imageURL: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
+    func updateRecord(_objectId: String,_title: String,_note: String, _isDone: Bool, completion: @escaping (_ response:String, _ error: Error?) -> Void) {
          
         let rowData = TodoModel(id: _objectId,
                                 title: _title,
                                  note: _note,
-                                 imageURL: _imageURL,
                                  isDone: _isDone,
                                  createdAt: Date()
                                 )
@@ -206,7 +216,7 @@ class TodoVM: ObservableObject {
         Reset TotoList Structure after Create/Update to firebase
      */
     func resetStrucValues(){
-        _ = TodoModel(id: "", title: "", note: "", imageURL: "", isDone: false, createdAt: Date())
+        _ = TodoModel(id: "", title: "", note: "",  isDone: false, createdAt: Date())
     }
     
 }

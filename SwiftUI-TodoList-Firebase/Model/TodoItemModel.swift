@@ -10,6 +10,7 @@ import Foundation
 struct TodoItemModel: Identifiable, Hashable {
     var id: String = ""
     var item: String = ""
+    var note: String = ""
     var imageURL: String = ""
     var todoListRefId: String = ""
     var createdByUser: String = ""
@@ -21,12 +22,13 @@ struct TodoItemModel: Identifiable, Hashable {
     
     mutating func updateProgressStatus(updateProgressSatatus : Bool) {
         isDone = updateProgressSatatus
-    }
+    } 
     
     func dictionaryFrom(_ rowdata: TodoItemModel) -> [String : Any] {
         
         return NSDictionary(objects: [rowdata.id,
                                       rowdata.item,
+                                      rowdata.note,
                                       rowdata.imageURL,
                                       rowdata.todoListRefId,
                                       rowdata.createdByUser,
@@ -38,6 +40,7 @@ struct TodoItemModel: Identifiable, Hashable {
                                     ],
                             forKeys: [kID as NSCopying,
                                       kTODOITEMITEM as NSCopying,
+                                      kTODOITEMNOTE as NSCopying,
                                       kTODOIMAGEURL as NSCopying,
                                       kTODOLISTREFID as NSCopying,
                                       kCREATEDBYUSER as NSCopying,
@@ -50,13 +53,3 @@ struct TodoItemModel: Identifiable, Hashable {
     }
 
 }
-
-
-/**
- 
- if let date = _dictionary[kDATEOFBIRTH] as? Timestamp {
-     dateOfBirth = date.dateValue()
- } else {
-     dateOfBirth = _dictionary[kDATEOFBIRTH] as? Date ?? Date()
- }
- */

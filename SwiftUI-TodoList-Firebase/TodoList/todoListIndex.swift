@@ -9,93 +9,74 @@ import SwiftUI
 
 struct todoListIndex: View {
     @StateObject var todoVM = TodoVM()
-    
-    @State private var newTodoItem = ""
+ 
     @State var isUpdateRecord: Bool = false
     @State var isTodoItemList: Bool = false
     @State var selectedRow: TodoModel?
-    
+
     @State var isUpdateCheckBox: Bool = false
-    
+     
     var body: some View {
         ZStack {
             VStack {
                 HeaderView(isTodoItemList: $isTodoItemList, isUpdateRecord: $isUpdateRecord, selectedRow: $selectedRow)
-                // End of What's Next? Section
-                VStack {
-                    HStack {
-                        Text("What's to do? ").font(.headline)
-                        Spacer()
-                    }.padding()
-                    // Start Body
-                    List {
-                        Section {
-                            ForEach(todoVM.todoListRows) { rowData in
-                                // List Body
-                                HStack {
-                                    
-                                    CheckBox(rowData: rowData, isCheckBox: false, isUpdateCheckBox: $isUpdateCheckBox)
-                                   
-                                    Text(rowData.title)
-                                    Spacer()
-                                    // get Popup detail
-                                    if (rowData.note != "") {
-                                        IconView(imageName: "info.circle", backgroundColor: Color.blue, frameSize: 25) {
-                                             //*Need Preview Info
-                                        } 
-                                    }
-                                    
-                                    // Add todo list Button
-                                    IconView(imageName: "list.dash", backgroundColor: Color.blue, frameSize: 25) {
-                                        isTodoItemList = true
-                                        selectedRow = rowData
+                 
+                // Start Body
+                List {
+                    Section {
+                        ForEach(todoVM.todoListRows) { rowData in
+                            // List Body
+                            HStack {
+                                TodoListCheckBox(rowData: rowData, isCheckBox: false, isUpdateCheckBox: $isUpdateCheckBox)
+                                
+                                Text(rowData.title)
+                                Spacer()
+                                // get Popup detail
+                                if (rowData.note != "") {
+                                    IconView(imageName: "info.circle", backgroundColor: Color.blue, frameSize: 25) {
+                                         
                                     }
                                 }
                                 
-                                .onLongPressGesture {
-                                    self.isUpdateRecord.toggle()
+                                // Add todo list Button
+                                IconView(imageName: "list.dash", backgroundColor: Color.blue, frameSize: 25) {
+                                    isTodoItemList = true
                                     selectedRow = rowData
                                 }
-                                .buttonStyle(PlainButtonStyle())
-                                
-                                
-                                // End List Body
-                                
-                            }//End of ForEach
-                            
-                            .onDelete { (indexSet) in
-                                self.deleteRow(at: indexSet)
                             }
-                        }
-                        .frame(height: 60)
+                            .onLongPressGesture {
+                                self.isUpdateRecord.toggle()
+                                selectedRow = rowData
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            // End List Body
+                            
+                        }//End of ForEach
                         
+                        .onDelete { (indexSet) in
+                            self.deleteRow(at: indexSet)
+                        }
                     }
-                    .onChange(of: isUpdateCheckBox, perform: { value in
-                        todoVM.getDataFromFirebase()
-                    })
-                    .navigationBarTitle("All Records")
-                   // .listStyle(GroupedListStyle())
-                  
+                    .frame(height: 60)
+                    
                 }
-                .onAppear {
+                .onAppear(){
                     todoVM.getDataFromFirebase()
                 }
-               
+                .onChange(of: isUpdateCheckBox, perform: { value in
+                    todoVM.getDataFromFirebase()
+                })
+                // End Body
                 Spacer()
- 
             }
+            .sheet(isPresented: $isUpdateRecord, content: {
+                TodoListForm(isUpdateRecord: $isUpdateRecord, selectedRow: $selectedRow ) {
+                    todoVM.getDataFromFirebase()
+                }
+            })
             
-            VStack {
-                if (isUpdateRecord) {
-                    TodoListForm(isUpdateRecord: $isUpdateRecord, selectedRow: $selectedRow ) {
-                        todoVM.getDataFromFirebase()
-                        
-                    }
-                }
-                
-                if isTodoItemList {
-                    TodoItems(isTodoItemList: $isTodoItemList, selectedRow: $selectedRow)
-                }
+            if isTodoItemList {
+                TodoItems(isTodoItemList: $isTodoItemList, selectedRow: $selectedRow)
             }
              
         }
@@ -112,9 +93,7 @@ struct todoListIndex: View {
         todoVM.todoListRows.remove(at: offsets.first!)
 
     }
-    
-     
-    
+
 }
 
 struct todoListIndex_Previews: PreviewProvider {
@@ -122,17 +101,4 @@ struct todoListIndex_Previews: PreviewProvider {
         todoListIndex()
     }
 }
-
-
-
-
-
-
-// Delete Button
-//                                    Button(action: {
-//                                        print("Delete Button")
-//                                    }, label: {
-//                                        Image(systemName: "trash.circle")
-//                                            .resizable()
-//                                            .frame(width: 35, height: 35, alignment: .center)
-//                                    })
+  

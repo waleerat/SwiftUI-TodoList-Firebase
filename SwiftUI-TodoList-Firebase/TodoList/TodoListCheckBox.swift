@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CheckBox: View {
+struct TodoListCheckBox: View {
     @StateObject var todoVM = TodoVM()
     
     @State var rowData = TodoModel()
@@ -37,8 +37,8 @@ struct CheckBox: View {
     
 }
 
-struct CheckBox_Previews: PreviewProvider {
+struct TodoListCheckBox_Previews: PreviewProvider {
     static var previews: some View {
-        CheckBox(isUpdateCheckBox: .constant(false))
+        TodoListCheckBox(isUpdateCheckBox: .constant(false))
     }
 }

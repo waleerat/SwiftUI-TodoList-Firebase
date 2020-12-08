@@ -18,15 +18,14 @@ struct TodoListForm: View {
     @State var objectId: String!
     @State var title: String = ""
     @State var note: String = ""
-    @State var imageURL: String = ""
     @State var isDone: Bool = false
     
     var loadParent = {}
 
     var body: some View {
-         ZStack {
+         VStack {
             Group {
-                Color.gray.opacity(0.6)
+               // Color.gray.opacity(0.6)
                             VStack {
                                 HStack {
                                     Spacer()
@@ -39,12 +38,12 @@ struct TodoListForm: View {
                                 .padding()
                                
                                 VStack {
-                                    Text((selectedRow?.id == "") ? "Add Todo" : "Update Todo")
+                                    Text((objectId == "" ) ? "Add Todo" : "Update Todo")
                                         .font(.title)
                                         .bold()
                                         .padding(.top, -50)
                                 }
-                                Spacer()
+                               
                                 // Start Form
                                 VStack (alignment: .leading){
                                     HStack {
@@ -74,7 +73,7 @@ struct TodoListForm: View {
                                 }.padding()
                                 .foregroundColor(Color.black)
                                 // End Form
-                            Spacer()
+                             
                                 HStack(spacing: 5) {
                                     ButtonView(
                                         text: "Cancel",backgroundColor: .gray, frameWidth: screen.width * 0.4) {
@@ -95,11 +94,10 @@ struct TodoListForm: View {
                             Spacer()
                             }
                             .foregroundColor(.primary)
-                        
-                            .frame(width: screen.width * 0.95, height: screen.height * 0.7)
-                            .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
+                            .frame(width: screen.width * 0.95, height: screen.height * 0.85)
+//                            .background(Color.white)
+//                            .cornerRadius(10)
+//                            .shadow(radius: 10)
             }
             .onAppear { 
                 if (isUpdateRecord) {
@@ -107,7 +105,6 @@ struct TodoListForm: View {
                         objectId = row.id
                         title = row.title
                         note = row.note
-                        imageURL = row.imageURL
                         isDone = row.isDone
                     }
                 }
@@ -117,11 +114,10 @@ struct TodoListForm: View {
         .edgesIgnoringSafeArea(.all)
     }
     
-    
     // MARK: - Helper Functions
     func saveDataToFirebase(){
         
-        if selectedRow?.id == "" {
+        if objectId == "" {
             doCreateRecord()
         } else {
             doUpdateRecord()
@@ -131,10 +127,8 @@ struct TodoListForm: View {
     }
     
     func doCreateRecord(){
-      
         self.todoVM.createRecord(_title: title,
                                _note: note,
-                               _imageURL: "",
                                _isDone: isDone
                                 ) { (response, error) in
             
@@ -146,7 +140,6 @@ struct TodoListForm: View {
         self.todoVM.updateRecord(_objectId: objectId ?? UUID().uuidString,
                                _title: title,
                                _note: note,
-                               _imageURL: "",
                                _isDone: isDone
                                 ) { (response, error) in
             

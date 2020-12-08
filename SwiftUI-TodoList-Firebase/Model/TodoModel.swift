@@ -14,15 +14,15 @@ struct TodoModel: Identifiable, Hashable {
     var note: String = ""
     var imageURL: String = ""
     var isDone: Bool = false
-    var todoItems: [TodoItemModel]?
+    var todoItems: [String]?
     var createdByUser: String = ""
     var createdAt: Date = Date()
     var updateAt: Date? = nil
     
     mutating func updateProgressStatus(updateProgressSatatus : Bool) {
-        isDone = updateProgressSatatus
+        self.isDone = updateProgressSatatus
     }
-    
+  
     func dictionaryFrom(_ rowdata: TodoModel) -> [String : Any] {
         
         return NSDictionary(objects: [rowdata.id,

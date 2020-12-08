@@ -41,7 +41,7 @@ struct HeaderView: View {
 
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView(isTodoItemList: .constant(false), isUpdateRecord: .constant(false), selectedRow: .constant(nil))
+        HeaderView(isTodoItemList: .constant(false), isUpdateRecord: .constant(false), selectedRow: .constant(TodoModel()))
     }
 }
 
