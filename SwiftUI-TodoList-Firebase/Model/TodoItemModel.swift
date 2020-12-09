@@ -26,30 +26,18 @@ struct TodoItemModel: Identifiable, Hashable {
     
     func dictionaryFrom(_ rowdata: TodoItemModel) -> [String : Any] {
         
-        return NSDictionary(objects: [rowdata.id,
-                                      rowdata.item,
-                                      rowdata.note,
-                                      rowdata.imageURL,
-                                      rowdata.todoListRefId,
-                                      rowdata.createdByUser,
-                                      rowdata.isDone,
-                                      rowdata.doneByUser,
-                                      rowdata.doneAt ?? Date(), //*Need to Fix 
-                                      rowdata.createdAt,
-                                      rowdata.updateAt ?? Date() //*Need to Fix
-                                    ],
-                            forKeys: [kID as NSCopying,
-                                      kTODOITEMITEM as NSCopying,
-                                      kTODOITEMNOTE as NSCopying,
-                                      kTODOIMAGEURL as NSCopying,
-                                      kTODOLISTREFID as NSCopying,
-                                      kCREATEDBYUSER as NSCopying,
-                                      kTODOISDONE as NSCopying,
-                                      kDONEBYUSER as NSCopying,
-                                      kDONEAT as NSCopying,
-                                      kCREATEDDATE as NSCopying,
-                                      kUPDATEDAT as NSCopying
-        ]) as! [String : Any]
+        return [kID: rowdata.id,
+                kTODOITEMITEM: rowdata.item,
+                kTODOITEMNOTE: rowdata.note,
+                kTODOIMAGEURL: rowdata.imageURL,
+                kTODOLISTREFID: rowdata.todoListRefId,
+                kCREATEDBYUSER: rowdata.createdByUser,
+                kTODOISDONE: rowdata.isDone,
+                kDONEBYUSER: rowdata.doneByUser,
+                kDONEAT: rowdata.doneAt ?? Date(),
+                kCREATEDDATE: rowdata.createdAt,
+                kUPDATEDAT: rowdata.updateAt ?? Date()
+                ]
     }
 
 }

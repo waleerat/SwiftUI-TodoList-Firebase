@@ -23,28 +23,17 @@ struct TodoModel: Identifiable, Hashable {
         self.isDone = updateProgressSatatus
     }
   
-    func dictionaryFrom(_ rowdata: TodoModel) -> [String : Any] {
-        
-        return NSDictionary(objects: [rowdata.id,
-                                      rowdata.title,
-                                      rowdata.note,
-                                      rowdata.imageURL,
-                                      rowdata.isDone,
-                                      rowdata.todoItems ?? [],
-                                      rowdata.createdByUser,
-                                      rowdata.createdAt,
-                                      rowdata.updateAt ?? Date()
-                                    ],
-                            forKeys: [kID as NSCopying,
-                                      kTODOTITLE as NSCopying,
-                                      kTODOMEMO as NSCopying,
-                                      kTODOIMAGEURL as NSCopying,
-                                      kTODOISDONE as NSCopying,
-                                      kTODOITEMS as NSCopying,
-                                      kCREATEDBYUSER as NSCopying,
-                                      kCREATEDDATE as NSCopying,
-                                      kUPDATEDAT as NSCopying,
-        ]) as! [String : Any]
+    func dictionaryFrom(_ rowdata: TodoModel) -> [String : Any] {  
+        return [kID : rowdata.id,
+                kTODOTITLE : rowdata.title,
+                kTODOMEMO : rowdata.note,
+                kTODOIMAGEURL : rowdata.imageURL,
+                kTODOISDONE : rowdata.isDone,
+                kTODOITEMS : rowdata.todoItems as Any,
+                kCREATEDBYUSER : rowdata.createdByUser,
+                kCREATEDDATE : rowdata.createdAt,
+                kUPDATEDAT : rowdata.updateAt ?? Date()
+        ]
     } 
 
 }

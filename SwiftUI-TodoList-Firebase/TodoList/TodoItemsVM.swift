@@ -83,7 +83,7 @@ class TodoItemsVM: ObservableObject {
     
     func saveRowDataToFirestore(rowData : TodoItemModel, completion: @escaping (_ error: Error?) -> Void) {
         let withData =  todoItemModel.dictionaryFrom(rowData)
-          
+       
         FirebaseReference(.TodoItemList).document(rowData.id).setData(withData) {
             error in
             DispatchQueue.main.async {
@@ -191,3 +191,21 @@ class TodoItemsVM: ObservableObject {
     }
     
 }
+
+
+/*
+ Firestore.firestore().collection("TodoList").document(rowData.id)
+     .collection("TodoItemList").document(rowData.id)
+     .setData(withData)  {
+         error in
+         DispatchQueue.main.async {
+             if error != nil {
+                 print("error saving order to firestore: ", error!.localizedDescription)
+             }
+             return
+         }
+
+     }
+
+ 
+ */

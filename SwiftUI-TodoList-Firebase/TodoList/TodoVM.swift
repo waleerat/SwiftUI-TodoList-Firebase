@@ -204,6 +204,19 @@ class TodoVM: ObservableObject {
             if let error = error {
                 completion("Error removing document: \(error)",error)
             } else {
+                
+//                .whereField("todoListRefId", isEqualTo: todoListRefId)
+//                FirebaseReference(.TodoItemList)
+//                    .document(objectId)
+//                    .delete() { error in
+//                    if let error = error {
+//                        completion("Error removing document: \(error)",error)
+//                    } else {
+//                        completion("Document successfully removed!",nil)
+//                    }
+//                }
+//
+                
                 completion("Document successfully removed!",nil)
             }
         }
@@ -220,3 +233,15 @@ class TodoVM: ObservableObject {
     }
     
 }
+
+
+/*
+ https://firebase.google.com/docs/firestore/manage-data/transactions
+ let error = NSError(
+             domain: "AppErrorDomain",
+             code: -1,
+             userInfo: [
+                 NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot \(sfDocument)"
+             ]
+         )
+ */
